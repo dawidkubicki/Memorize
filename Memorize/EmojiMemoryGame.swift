@@ -8,9 +8,11 @@
 import SwiftUI
 
 // let's create a view model here (to model which is a MemoryGame)
-class EmojiMemoryGame {
+// add ObservableObject to change UI in the view (ObservableObject only works for class)
+class EmojiMemoryGame: ObservableObject {
     //(set) it's like a glass door - only EmojiMemoryGame can modify model but rest can see it
-    private(set) var model: MemoryGame<String> = EmojiMemoryGame.createMemoryGame()
+    //add published to our model var
+    @Published private(set) var model: MemoryGame<String> = EmojiMemoryGame.createMemoryGame()
         
     static func createMemoryGame() -> MemoryGame<String> {
         let emojis: Array<String> = ["👻","🎃", "🕷"]
@@ -29,4 +31,4 @@ class EmojiMemoryGame {
     func choose(card: MemoryGame<String>.Card) {
         return model.choose(card: card)
     }
-}
+} 
