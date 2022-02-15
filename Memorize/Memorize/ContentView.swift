@@ -16,6 +16,8 @@ struct ContentView: View {
     var animals: [String] = ["🐶", "🐱", "🐭", "🐹", "🐰", "🦊", "🐻", "🐼", "🐻‍❄️", "🐨", "🐯", "🦁", "🐷", "🐸"]
     
     @State var emojiCount = 17
+    @State var runDefault = true
+    @State var chosenEmoji: [String] = []
     
     var body: some View {
         
@@ -23,8 +25,15 @@ struct ContentView: View {
             title
             ScrollView {
                 LazyVGrid(columns: [GridItem(.adaptive(minimum:  75))]) {
-                    ForEach(emojis[0..<emojiCount], id: \.self) { emoji in
-                        CardView(content: emoji).aspectRatio(2/3, contentMode: .fit)
+                    if runDefault{
+                        ForEach(emojis[0..<emojiCount], id: \.self) { emoji in
+                            CardView(content: emoji).aspectRatio(2/3, contentMode: .fit)
+                        }
+                    }
+                    else {
+                        ForEach(chosenEmoji[0..<emojiCount], id: \.self) { emoji in
+                            CardView(content: emoji).aspectRatio(2/3, contentMode: .fit)
+                        }
                     }
                 }
                 .foregroundColor(.red)
@@ -33,9 +42,30 @@ struct ContentView: View {
             Spacer()
             HStack{
                 Button{
-                    print("Hi")
+                    runDefault = true
                 } label: {
-                    Image(systemName: "car").font(.largeTitle)
+                    VStack{
+                        Image(systemName: "flame").font(.largeTitle)
+                        Text("All")
+                    }
+                }
+                Button{
+                    runDefault = false
+                    chosenEmoji = vehicles
+                } label: {
+                    VStack{
+                        Image(systemName: "car").font(.largeTitle)
+                        Text("Vehicles")
+                    }
+                }
+                Button{
+                    runDefault = false
+                    chosenEmoji = animals
+                } label: {
+                    VStack{
+                        Image(systemName: "pawprint").font(.largeTitle)
+                        Text("Animals")
+                    }
                 }
             }
         }
