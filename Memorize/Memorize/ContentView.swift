@@ -10,6 +10,11 @@ import SwiftUI
 struct ContentView: View {
     
     var emojis: [String] = ["⛷", "🚡", "📚", "🧅", "✊", "🦌", "⏰", "⚖️", "👻", "👽", "😸", "🎃", "🐇", "🌴", "🥎", "🛹", "⛳️", "🏀", "🍴", "🏋️‍♀️", "🥋", "🥊"]
+    
+    var vehicles: [String] = ["🚗", "🚕", "🚙", "🚌", "🚎", "🏎", "🚓", "🚑", "🚒", "🚐", "🛻", "🚚", "🚛", "🚜", "🛴", "🚲", "🛺", "🚝", "🚄"]
+    
+    var animals: [String] = ["🐶", "🐱", "🐭", "🐹", "🐰", "🦊", "🐻", "🐼", "🐻‍❄️", "🐨", "🐯", "🦁", "🐷", "🐸"]
+    
     @State var emojiCount = 17
     
     var body: some View {
@@ -26,6 +31,13 @@ struct ContentView: View {
                 .padding(.horizontal)
             }
             Spacer()
+            HStack{
+                Button{
+                    print("Hi")
+                } label: {
+                    Image(systemName: "car").font(.largeTitle)
+                }
+            }
         }
     }
     
