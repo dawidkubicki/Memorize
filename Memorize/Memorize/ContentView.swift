@@ -15,7 +15,8 @@ struct ContentView: View {
     
     @State var animals: [String] = ["🐶", "🐱", "🐭", "🐹", "🐰", "🦊", "🐻", "🐼", "🐻‍❄️", "🐨", "🐯", "🦁", "🐷", "🐸"]
     
-    @State var emojiCount = 17
+//    @State var emojiCount = Int.random(in: 4...17)
+    @State var emojiCount = 10
     @State var runDefault = true
     @State var chosenEmoji: [String] = []
     
@@ -24,7 +25,7 @@ struct ContentView: View {
         VStack{
             title
             ScrollView {
-                LazyVGrid(columns: [GridItem(.adaptive(minimum:  75))]) {
+                LazyVGrid(columns: [GridItem(.adaptive(minimum: widthThatBestFits(cardCount: emojiCount)))]) {
                     if runDefault{
                         ForEach(emojis[0..<emojiCount], id: \.self) { emoji in
                             CardView(content: emoji).aspectRatio(2/3, contentMode: .fit)
@@ -44,6 +45,7 @@ struct ContentView: View {
                 Button{
                     runDefault = true
                     emojis.shuffle()
+                    emojiCount = Int.random(in: 4...emojis.count)
                 } label: {
                     VStack{
                         Image(systemName: "flame").font(.largeTitle)
@@ -54,6 +56,7 @@ struct ContentView: View {
                     runDefault = false
                     chosenEmoji = vehicles
                     vehicles.shuffle()
+                    emojiCount = Int.random(in: 4...vehicles.count)
                 } label: {
                     VStack{
                         Image(systemName: "car").font(.largeTitle)
@@ -64,6 +67,7 @@ struct ContentView: View {
                     runDefault = false
                     chosenEmoji = animals
                     animals.shuffle()
+                    emojiCount = Int.random(in: 4...animals.count)
                 } label: {
                     VStack{
                         Image(systemName: "pawprint").font(.largeTitle)
@@ -71,6 +75,21 @@ struct ContentView: View {
                     }
                 }
             }
+        }
+    }
+    
+    func widthThatBestFits(cardCount: Int) -> CGFloat {
+        if (cardCount <= 4) {
+            return 125
+        }
+        else if (cardCount > 4) && (cardCount <= 9) {
+            return 120
+        }
+        else if (cardCount > 9) && (cardCount <= 17) {
+            return 80
+        }
+        else {
+            return 65
         }
     }
     
