@@ -9,18 +9,18 @@ import SwiftUI
 
 struct ContentView: View {
     
-    var emojis: [String] = ["⛷", "🚡", "📚", "🧅", "✊", "🦌", "⏰", "⚖️", "👻", "👽", "😸", "🎃", "🐇", "🌴", "🥎", "🛹", "⛳️", "🏀", "🍴", "🏋️‍♀️", "🥋", "🥊"]
+    @State var emojis: [String] = ["⛷", "🚡", "📚", "🧅", "✊", "🦌", "⏰", "⚖️", "👻", "👽", "😸", "🎃", "🐇", "🌴", "🥎", "🛹", "⛳️", "🏀", "🍴", "🏋️‍♀️", "🥋", "🥊"]
     
-    var vehicles: [String] = ["🚗", "🚕", "🚙", "🚌", "🚎", "🏎", "🚓", "🚑", "🚒", "🚐", "🛻", "🚚", "🚛", "🚜", "🛴", "🚲", "🛺", "🚝", "🚄"]
+    @State var vehicles: [String] = ["🚗", "🚕", "🚙", "🚌", "🚎", "🏎", "🚓", "🚑", "🚒", "🚐", "🛻", "🚚", "🚛", "🚜", "🛴", "🚲", "🛺", "🚝", "🚄"]
     
-    var animals: [String] = ["🐶", "🐱", "🐭", "🐹", "🐰", "🦊", "🐻", "🐼", "🐻‍❄️", "🐨", "🐯", "🦁", "🐷", "🐸"]
+    @State var animals: [String] = ["🐶", "🐱", "🐭", "🐹", "🐰", "🦊", "🐻", "🐼", "🐻‍❄️", "🐨", "🐯", "🦁", "🐷", "🐸"]
     
     @State var emojiCount = 17
     @State var runDefault = true
     @State var chosenEmoji: [String] = []
     
     var body: some View {
-        
+    
         VStack{
             title
             ScrollView {
@@ -43,6 +43,7 @@ struct ContentView: View {
             HStack{
                 Button{
                     runDefault = true
+                    emojis.shuffle()
                 } label: {
                     VStack{
                         Image(systemName: "flame").font(.largeTitle)
@@ -52,6 +53,7 @@ struct ContentView: View {
                 Button{
                     runDefault = false
                     chosenEmoji = vehicles
+                    vehicles.shuffle()
                 } label: {
                     VStack{
                         Image(systemName: "car").font(.largeTitle)
@@ -61,6 +63,7 @@ struct ContentView: View {
                 Button{
                     runDefault = false
                     chosenEmoji = animals
+                    animals.shuffle()
                 } label: {
                     VStack{
                         Image(systemName: "pawprint").font(.largeTitle)
