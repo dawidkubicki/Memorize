@@ -9,48 +9,76 @@ import SwiftUI
 
 struct ContentView: View {
     
-    var emojis: [String] = ["⛷", "🚡", "📚", "🧅", "✊", "🦌", "⏰", "⚖️", "👻", "👽", "😸", "🎃", "🐇", "🌴", "🥎", "🛹", "⛳️", "🏀", "🍴", "🏋️‍♀️", "🥋", "🥊"]
+    @State var emojis: [String] = ["⛷", "🚡", "📚", "🧅", "✊", "🦌", "⏰", "⚖️", "👻", "👽", "😸", "🎃", "🐇", "🌴", "🥎", "🛹", "⛳️", "🏀", "🍴", "🏋️‍♀️", "🥋", "🥊"]
+    
+    @State var vehicles: [String] = ["🚗", "🚕", "🚙", "🚌", "🚎", "🏎", "🚓", "🚑", "🚒", "🚐", "🛻", "🚚", "🚛", "🚜", "🛴", "🚲", "🛺", "🚝", "🚄"]
+    
+    @State var animals: [String] = ["🐶", "🐱", "🐭", "🐹", "🐰", "🦊", "🐻", "🐼", "🐻‍❄️", "🐨", "🐯", "🦁", "🐷", "🐸"]
+    
     @State var emojiCount = 17
+    @State var runDefault = true
+    @State var chosenEmoji: [String] = []
     
     var body: some View {
+    
         VStack{
+            title
             ScrollView {
                 LazyVGrid(columns: [GridItem(.adaptive(minimum:  75))]) {
-                    ForEach(emojis[0..<emojiCount], id: \.self) { emoji in
-                        CardView(content: emoji).aspectRatio(2/3, contentMode: .fit)
+                    if runDefault{
+                        ForEach(emojis[0..<emojiCount], id: \.self) { emoji in
+                            CardView(content: emoji).aspectRatio(2/3, contentMode: .fit)
+                        }
+                    }
+                    else {
+                        ForEach(chosenEmoji[0..<emojiCount], id: \.self) { emoji in
+                            CardView(content: emoji).aspectRatio(2/3, contentMode: .fit)
+                        }
                     }
                 }
                 .foregroundColor(.red)
                 .padding(.horizontal)
             }
             Spacer()
-            HStack {
-                remove
-                Spacer()
-                add
+            HStack{
+                Button{
+                    runDefault = true
+                    emojis.shuffle()
+                } label: {
+                    VStack{
+                        Image(systemName: "flame").font(.largeTitle)
+                        Text("All")
+                    }
+                }
+                Button{
+                    runDefault = false
+                    chosenEmoji = vehicles
+                    vehicles.shuffle()
+                } label: {
+                    VStack{
+                        Image(systemName: "car").font(.largeTitle)
+                        Text("Vehicles")
+                    }
+                }
+                Button{
+                    runDefault = false
+                    chosenEmoji = animals
+                    animals.shuffle()
+                } label: {
+                    VStack{
+                        Image(systemName: "pawprint").font(.largeTitle)
+                        Text("Animals")
+                    }
+                }
             }
-            .font(.largeTitle)
-            .padding(.horizontal)
         }
     }
     
-    var remove: some View {
-        Button {
-            if emojiCount > 1 {
-                emojiCount -= 1
-            }
-        } label: {
-            Image(systemName: "minus.circle")
-        }
-    }
-    
-    var add: some View {
-        Button {
-            if emojiCount < emojis.count {
-                emojiCount += 1
-            }
-        } label: {
-            Image(systemName: "plus.circle")
+    var title: some View {
+        HStack{
+            Spacer()
+            Text("Memorize!").font(.largeTitle)
+            Spacer()
         }
     }
 }
@@ -108,8 +136,6 @@ struct CardView: View {
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
         ContentView()
-            .preferredColorScheme(.light)
-.previewInterfaceOrientation(.portrait)
         ContentView()
             .preferredColorScheme(.dark)
     }
